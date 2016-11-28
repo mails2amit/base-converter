@@ -40,6 +40,7 @@ Minimal!
 </ul>
 
 <h3>How to use this library?</h3>
+1. Create Converter, annotate the with @Convert
 ```
 package com.dibya.converter;
 
@@ -55,7 +56,7 @@ public class TestVoFromTestConverter extends AbstractConverter {
     }
 }
 
-package com.dibya.converter;
+package com.dibya.converter.address;
 @Convert(source = com.dibya.Address.class, target = com.dibya.AddressVo.class)
 public class AddressVoFromAddressConverter extends AbstraactConverter {
     @Override
@@ -63,7 +64,9 @@ public class AddressVoFromAddressConverter extends AbstraactConverter {
          // do stuff
      }
 }
-
+```
+2. Use created converter by creating an instance of BaseConverter and passing the package which contains the converters
+```
 public class App {
     public static void main(String... args) {
         Test source = new Test();
@@ -82,5 +85,7 @@ Now users of this are forced to use AbstractConverter, the users inherit `conver
 <h2>Tips</h2>
 <ol>
 <li>Use a dependency injection framework to inject BaseConverter, maintain it as a singleton. Scanning the packages is costly.</li>
+<li>Keep all the converters under one parent package. The search will be quicker</li>
+<li>The scanner can scan the sub-packages as well</li>
 </ol>
 
