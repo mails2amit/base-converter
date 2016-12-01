@@ -15,7 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
  *
  * @author Dibya Ranjan
  */
-public abstract class AbstractConverter implements Converter {
+public abstract class AbstractConverter implements NestedConverter {
     protected Converter converter;
 
     public void setConverter(Converter converter) {

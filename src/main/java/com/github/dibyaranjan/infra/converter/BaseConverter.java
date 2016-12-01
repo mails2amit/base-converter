@@ -10,7 +10,7 @@ public class BaseConverter implements Converter {
 
 	public BaseConverter(String packageToScan) {
 		ConverterScanner converterScanner = new ConverterScanner();
-		Map<SourceTargetValue, Converter> converterRegistry = converterScanner.scanConvertersFromPackage(packageToScan);
+		Map<SourceTargetValue, Class<?>> converterRegistry = converterScanner.scanConvertersFromPackage(packageToScan);
 		converterFactory = new ConverterFactory();
 		converterFactory.setConverterRegistry(converterRegistry);
 	}
@@ -21,9 +21,9 @@ public class BaseConverter implements Converter {
 
 		Converter converter = converterFactory.getConverter(stv);
 
-		if (converter instanceof AbstractConverter) {
-			AbstractConverter abstractConverter = (AbstractConverter) converter;
-			abstractConverter.setConverter(this);
+		if (converter instanceof NestedConverter) {
+			NestedConverter nestedConverter = (NestedConverter) converter;
+			nestedConverter.setConverter(this);
 		}
 
 		return (T) converter.convert(target, source);

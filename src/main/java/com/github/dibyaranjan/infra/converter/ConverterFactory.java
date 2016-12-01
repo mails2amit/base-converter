@@ -7,20 +7,25 @@ import java.util.Map;
 import com.github.dibyaranjan.infra.converter.vo.SourceTargetValue;
 
 public class ConverterFactory {
-	private Map<SourceTargetValue, Converter> converterRegistry;
+	private Map<SourceTargetValue, Class<?>> converterRegistry;
 
-	public void setConverterRegistry(Map<SourceTargetValue, Converter> converterRegistry) {
+	public void setConverterRegistry(Map<SourceTargetValue, Class<?>> converterRegistry) {
 		this.converterRegistry = converterRegistry;
 	}
 
 	public Converter getConverter(SourceTargetValue stv) {
-		Converter converter = converterRegistry.get(stv);
-		if (converter == null) {
+		Class<?> clazz = converterRegistry.get(stv);
+		if (clazz == null) {
 			throw new IllegalArgumentException("Converter not registered to convert " + stv.getTarget() + " from "
 					+ stv.getSource());
 		}
-
-		return converter;
+		
+		try {
+			return createNewInstance(clazz);
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException("Could not initialize" + clazz);
+		}
 	}
 
 	private Converter createNewInstance(Class<?> clazz) throws NoSuchMethodException, InstantiationException,

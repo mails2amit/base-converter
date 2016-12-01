@@ -1,8 +1,6 @@
 package com.github.dibyaranjan.converter.scanner;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +13,6 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.SystemPropertyUtils;
 
-import com.github.dibyaranjan.infra.converter.Converter;
 import com.github.dibyaranjan.infra.converter.annotation.Convert;
 import com.github.dibyaranjan.infra.converter.vo.SourceTargetValue;
 
@@ -39,14 +36,14 @@ public class ConverterScanner {
 	 * @return A map with key as SourceTargetValue and value as an instance of
 	 *         the converter
 	 */
-	public Map<SourceTargetValue, Converter> scanConvertersFromPackage(String basePackage) {
+	public Map<SourceTargetValue, Class<?>> scanConvertersFromPackage(String basePackage) {
 		ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 		MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
 
 		String searchPath = getPackagePath(basePackage);
 		try {
 			Resource[] resources = resourcePatternResolver.getResources(searchPath);
-			Map<SourceTargetValue, Converter> converterRegistry = new HashMap<>();
+			Map<SourceTargetValue, Class<?>> converterRegistry = new HashMap<>();
 			for (Resource resource : resources) {
 				if (resource.isReadable()) {
 					MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
@@ -66,34 +63,25 @@ public class ConverterScanner {
 				+ "/**/*.class";
 	}
 
-	private void registerConverter(MetadataReader metadataReader, Map<SourceTargetValue, Converter> converterRegistry) {
+	private void registerConverter(MetadataReader metadataReader, Map<SourceTargetValue, Class<?>> converterRegistry) {
 		try {
 			String className = metadataReader.getClassMetadata().getClassName();
 			Class<?> clazz = Class.forName(className);
 			Convert annotation = clazz.getAnnotation(Convert.class);
 			if (annotation != null) {
-				Converter newInstance = createNewInstance(clazz);
-				registerConverter(converterRegistry, annotation, newInstance);
+				registerConverter(converterRegistry, annotation, clazz);
 			}
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (ClassNotFoundException | SecurityException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private Converter createNewInstance(Class<?> clazz) throws NoSuchMethodException, InstantiationException,
-			IllegalAccessException, InvocationTargetException {
-		Constructor<?> constructor = clazz.getConstructor();
-		Converter newInstance = (Converter) constructor.newInstance();
-		return newInstance;
-	}
-
-	private void registerConverter(Map<SourceTargetValue, Converter> converterRegistry, Convert annotation,
-			Converter newInstance) {
+	private void registerConverter(Map<SourceTargetValue, Class<?>> converterRegistry, Convert annotation,
+			Class<?> clazz) {
 		Class<?> source = annotation.source();
 		Class<?> target = annotation.target();
 
 		SourceTargetValue stv = new SourceTargetValue(source, target);
-		converterRegistry.put(stv, newInstance);
+		converterRegistry.put(stv, clazz);
 	}
 }
