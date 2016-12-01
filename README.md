@@ -80,7 +80,7 @@ public class App {
 }
 
 ```
-Now users of this are forced to use AbstractConverter, the users inherit `converter` object that can be used to chain other type changing required inside a Converter.
+Now users of this<strike> are forced to use AbstractConverter</strike> have an option to either implemnt `NestedConverter` and set the `BaseConverter` to reuse or can extend `AbstractConverter`.
 
 <h2>Tips</h2>
 <ol>
