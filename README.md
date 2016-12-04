@@ -80,7 +80,7 @@ public class App {
 }
 
 ```
-Now users of this<strike> are forced to use AbstractConverter</strike> have an option to either implemnt `NestedConverter` and set the `BaseConverter` to reuse or can extend `AbstractConverter`.
+Now users of this<strike> are forced to use AbstractConverter</strike> have an option to either implemnt `NestedConverter` or can extend `AbstractConverter`.
 
 <h2>Tips</h2>
 <ol>
