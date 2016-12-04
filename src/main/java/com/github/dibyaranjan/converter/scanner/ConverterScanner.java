@@ -1,8 +1,8 @@
 package com.github.dibyaranjan.converter.scanner;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -43,7 +43,7 @@ public class ConverterScanner {
 		String searchPath = getPackagePath(basePackage);
 		try {
 			Resource[] resources = resourcePatternResolver.getResources(searchPath);
-			Map<SourceTargetValue, Class<?>> converterRegistry = new HashMap<>();
+			Map<SourceTargetValue, Class<?>> converterRegistry = new ConcurrentHashMap<>();
 			for (Resource resource : resources) {
 				if (resource.isReadable()) {
 					MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
