@@ -7,12 +7,12 @@
 	<name>Base Converter</name>
 	<description>Converter is very common across multiple projects. This artifact is to abstract the creation of converters.</description>
 	<scm>
-		<connection>scm:git:https://github.com/dibyaranjan/converter-infra.git</connection>
-		<developerConnection>scm:git:https://github.com/dibyaranjan/converter-infra.git</developerConnection>
-		<url>https://github.com/dibyaranjan/converter-infra</url>
+		<connection>scm:git:https://github.com/dibyaranjan/base-converter.git</connection>
+		<developerConnection>scm:git:https://github.com/dibyaranjan/base-converter.git</developerConnection>
+		<url>https://github.com/dibyaranjan/base-converter</url>
 		<tag>HEAD</tag>
 	</scm>
-	<url>https://github.com/dibyaranjan/converter-infra</url>
+	<url>https://github.com/dibyaranjan/base-converter</url>
 
 	<developers>
 		<developer>
