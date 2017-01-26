@@ -1,15 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.dibyaranjan</groupId>
 	<artifactId>base-converter</artifactId>
-	<version>0.1-beta</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>Base Converter</name>
 	<description>Converter is very common across multiple projects. This artifact is to abstract the creation of converters.</description>
 	<scm>
 		<connection>scm:git:https://github.com/dibyaranjan/converter-infra.git</connection>
 		<developerConnection>scm:git:https://github.com/dibyaranjan/converter-infra.git</developerConnection>
 		<url>https://github.com/dibyaranjan/converter-infra</url>
-		<tag>0.1-beta</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<url>https://github.com/dibyaranjan/converter-infra</url>
 
